@@ -87,7 +87,13 @@ body.ro #meta,body.ro .ctl{display:none}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 /* ===== FIREBASE SETTINGS: copy the same five values you put in index.html ===== */
-const FB={apiKey:"PASTE",authDomain:"PASTE",databaseURL:"PASTE",projectId:"PASTE",appId:"PASTE"};
+const FB={  apiKey: "AIzaSyDGJ_6rk-hyxr3ErbjlAlr2qVDwA5AkhjY",
+  authDomain: "sussy-scoresheet.firebaseapp.com",
+  databaseURL: "https://sussy-scoresheet-default-rtdb.firebaseio.com",
+  projectId: "sussy-scoresheet",
+  storageBucket: "sussy-scoresheet.firebasestorage.app",
+  messagingSenderId: "152966582754",
+  appId: "1:152966582754:web:507f41158b35c3d447e9bb"};
 /* ============================================================================== */
 const CLOUD=String(FB.databaseURL).startsWith('https://')&&!!window.firebase;
 const DID=(location.hash.slice(1).replace(/[^\w-]/g,'')||'main').slice(0,40);
