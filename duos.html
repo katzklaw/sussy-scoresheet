@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Duos Score Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#07080f;--panel:#10121d;--ink:#e8ecff;--mut:#7d86a8;--crew:#00b0f0;--imp:#ff2a4d;--pos:#3dffa0;--neg:#ff5ad9;--line:#252a45;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 15px/1.4 Rajdhani,system-ui,sans-serif;
+background-image:radial-gradient(1px 1px at 20% 30%,#fff8 50%,transparent),radial-gradient(1px 1px at 70% 60%,#fff6 50%,transparent),radial-gradient(1.5px 1.5px at 40% 80%,#9cf8 50%,transparent),radial-gradient(900px 500px at 80% -10%,#3b1d6e55,transparent),radial-gradient(700px 400px at 0% 100%,#00506e55,transparent);background-size:240px 240px,310px 310px,420px 420px,auto,auto}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+#sheet{padding:22px;border-radius:18px;background:linear-gradient(160deg,#0d1020ee,#070810ee);border:1px solid #3a4170;box-shadow:0 0 40px #5a3cff22,inset 0 0 60px #00b0f011}
+h1{display:inline-block;vertical-align:top;max-width:100%;font:800 clamp(22px,5vw,40px) Orbitron,sans-serif;margin:0;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(90deg,#1ec73a,#ff80e8,#19abff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px #7a5cff88)}
+.sub{font:600 14px Orbitron,sans-serif;color:var(--mut);letter-spacing:.2em;margin:4px 0 16px}
+.tw{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0 3px;width:100%}
+th,td{padding:5px 8px;text-align:center;white-space:nowrap}
+.gh{font:700 12px Orbitron,sans-serif;background:#2a2f4a;color:#fff;border-radius:6px}
+.gh.crew{background:var(--crew);box-shadow:0 0 14px #00b0f088}.gh.imp{background:var(--imp);box-shadow:0 0 14px #ff2a4d88}
+.nm{text-align:left;font-weight:700;border-radius:6px;min-width:110px}
+.c{background:#0e1122;font:700 17px Rajdhani,sans-serif;position:relative;min-width:54px}
+.c.e{color:#333a5c}.c.imp{color:#ff4560;text-shadow:0 0 8px #ff2a4d88}
+.c i{font-size:11px;color:#ffd166;position:absolute;top:1px;left:4px;font-style:normal}
+.c.svp{box-shadow:inset 0 -2px 0 var(--pos);background:linear-gradient(#0e1122,#0f2a22)}
+.c.svn{box-shadow:inset 0 -2px 0 var(--neg);background:linear-gradient(#0e1122,#2a1030)}
+.c.svp:after,.c.svn:after{position:absolute;right:3px;top:2px;font-size:8px}
+.c.svp:after{content:"▲";color:var(--pos)}.c.svn:after{content:"▼";color:var(--neg)}
+.tot{font:800 18px Orbitron,sans-serif;color:#ffd166}
+.pn{color:#ffd166;font-size:13px;text-align:left}
+.key{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:8px 0 18px}
+.key b{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.pod{display:flex;justify-content:center;align-items:flex-end;gap:10px;margin:10px 0 20px}
+.pod>div{width:min(30%,170px);text-align:center;border-radius:12px 12px 0 0;padding:10px 6px;border:1px solid #fff3}
+.pod .n{font:700 14px Orbitron,sans-serif;overflow:hidden;text-overflow:ellipsis}.pod .s{font:800 26px Orbitron,sans-serif}
+.p1{height:130px;background:linear-gradient(#ffd16655,#ffd16611);box-shadow:0 0 30px #ffd16655}.p2{height:100px;background:linear-gradient(#cfd8e655,#cfd8e611)}.p3{height:80px;background:linear-gradient(#d4894a55,#d4894a11)}
+.lbw{position:relative}
+.lb{display:grid;grid-template-columns:28px 180px 1fr 44px;gap:10px;align-items:center;padding:3px 0}
+.lb b{font:700 14px Orbitron,sans-serif;color:var(--mut);text-align:right}
+.chip{padding:3px 10px;border-radius:6px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{height:10px;background:#151933;border-radius:6px;overflow:hidden}.bar u{display:block;height:100%;border-radius:6px;box-shadow:0 0 12px currentColor;transition:width .7s}
+.lb em{font:800 18px Orbitron,sans-serif;font-style:normal;text-align:right}
+.ctl{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+button,select,input,textarea{font:inherit;color:var(--ink);background:#0b0d18;border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+button{cursor:pointer}button:hover{border-color:#6a7bff}
+.tabs button.on{background:#2a2f6e;border-color:#7a8bff}
+.rb.crew.on{background:var(--crew);color:#001}.rb.imp.on{background:var(--imp)}
+.ex{background:linear-gradient(90deg,#00b0f0,#7a5cff);border:0;font-weight:700;padding:8px 14px}
+textarea{width:100%;height:150px;margin:10px 0;font:13px ui-monospace,monospace}
+.rt{font-size:13px}.rt th{color:var(--mut);font-weight:600}.rt td{padding:3px 4px}.rt input[type=number]{width:62px}.rt input:not([type]){width:120px}
+.rt tr.warn td{background:#3a1018}
+.q button{padding:2px 5px;font-size:11px;margin-left:3px}
+.st{font-size:13px;margin:4px 0}.st.ok{color:var(--pos)}.st.bad{color:#ffb454}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid2 label{display:grid;gap:3px;color:var(--mut)}
+.pl{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}.pl div{display:flex;gap:6px}.pl input[type=color]{width:40px;padding:1px}
+h3{margin:14px 0 6px;font:700 13px Orbitron,sans-serif;color:var(--mut);letter-spacing:.1em}
+.al span{display:inline-block;margin:2px 4px 2px 0;padding:2px 8px;background:#161a30;border-radius:6px;font-size:13px}
+.al a{cursor:pointer;color:#ff6b81;margin-left:6px}
+.hint{color:var(--mut);font-size:13px;margin:0 0 10px}
+.nc{display:flex;gap:6px;align-items:center;min-width:0}.tb{font-size:9px;color:#ffd166;border:1px solid #ffd16688;border-radius:4px;padding:0 4px;white-space:nowrap}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.grid3 label{display:grid;gap:3px;color:var(--mut)}
+.ft{width:fit-content;max-width:100%;font:800 clamp(14px,3.6vw,20px) Orbitron,sans-serif;letter-spacing:.4em;padding-left:.4em;text-transform:uppercase;text-align:center;margin:4px auto 22px;background:linear-gradient(90deg,#19abff,#ff80e8,#1ec73a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px #7a5cff88)}
+#sheet.exporting h1,#sheet.exporting .ft{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#c9b8ff;filter:none;text-shadow:0 0 14px #7a5cffcc,0 0 28px #00b0f066}
+#sheet h1.solid{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--tc);filter:none;text-shadow:0 0 16px var(--tc)}
+.rt tr.hostrow td{opacity:.4}.rt tr.hostrow td:last-child{opacity:1}
+.pl div{flex-wrap:wrap}.pl .an{width:100%;font-size:12px;color:var(--mut)}
+#topbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 12px;padding:8px 12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;font-size:13px}
+#topbar .sp{flex:1}#topbar input{width:110px}#msg{color:#ffb454}
+.dot{width:9px;height:9px;border-radius:50%;background:#7d86a8}.dot.ed{background:var(--pos);box-shadow:0 0 8px var(--pos)}.dot.vw{background:#ffb454}
+body.ro #meta,body.ro .ctl{display:none}
+@media(max-width:600px){.lb{grid-template-columns:22px 130px 1fr 38px}}
+</style><style>
+.nm b{display:block}.nm small{display:block;font-weight:600;font-size:11px;opacity:.85}
+.nm{min-width:170px}.c{min-width:48px}.sm{color:#9aa3c7;font-size:12px}
+</style>
+</head><body><div class="wrap">
+<div id="topbar"></div>
+<div class="hint" id="note"></div>
+<div class="ctl" id="meta" style="margin:0 0 12px"></div>
+<div id="sheet"></div>
+<div style="margin-top:12px"><button class="ex" onclick="exp()">&#11015; Export sheet as image</button></div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* ===== FIREBASE SETTINGS: copy the same five values you put in index.html ===== */
+const FB={apiKey:"PASTE",authDomain:"PASTE",databaseURL:"PASTE",projectId:"PASTE",appId:"PASTE"};
+/* ============================================================================== */
+const CLOUD=String(FB.databaseURL).startsWith('https://')&&!!window.firebase;
+const DID=(location.hash.slice(1).replace(/[^\w-]/g,'')||'main').slice(0,40);
+const CFGPATH='sheets/duos-'+DID+'/cfg';
+const AU=[['Red','#b30a1f'],['Orange','#ef7d0e'],['Yellow','#f9f559'],['Lime','#50ef3a'],['Green','#127f2f'],['Cyan','#39fedb'],['Blue','#132fd0'],['Purple','#6b30bc'],['Pink','#eb54b9'],['Black','#3e464f'],['White','#d8e0f2'],['Brown','#73481e'],['Maroon','#731911'],['Rose','#eac1d3'],['Banana','#fefcbf'],['Coral','#ec7576'],['Gray','#6f8498'],['Tan','#938676']];
+const cn=h=>(AU.find(a=>a[1]==h)||[h])[0],ci=h=>{const i=AU.findIndex(a=>a[1]==h);return i<0?99:i};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ink=h=>{const n=parseInt(h.slice(1),16);return((n>>16)*299+(n>>8&255)*587+(n&255)*114)/1000>140?'#0a0a12':'#fff'};
+
+function mkCalc(S){const N=7;function parse(t){const out=[],seen={};(t||'').split(/\n/).forEach(l=>{const m=l.match(/^\s*(.+?):\s*(-?\d+)\s*Total,\s*(-?\d+)\s*Normal,\s*(-?\d+)\s*\+?\s*SV/i);if(m){const k=m[1].trim().toLowerCase();if(!seen[k]){seen[k]=1;out.push({raw:m[1].trim(),key:k,total:+m[2],sv:+m[4]})}}});return out}
+function eff(k,gi){for(let j=gi;j>=0;j--){const m=S.games[j].map;if(m&&k in m)return m[k]}return S.map[k]}
+function compute(){const cells=S.slots.map(()=>Array(N).fill(null));
+S.games.forEach((g,gi)=>parse(g.raw).forEach(p=>{const s=eff(p.key,gi);if(s==null||S.hosts[p.key])return;const o=g.rows[p.key]||{},sv=o.sv??p.sv;cells[s][gi]={score:o.score??(p.total+sv-p.sv),sv,imp:!!o.imp,adj:o.adj||0,note:o.note||'',kills:o.kills||0,who:p.raw.replace(/#\d+$/,''),al:(S.alias||{})[p.key]??/#\d+$/.test(p.key)}}));
+return S.slots.map((sl,i)=>{let t=0,adj=0,notes=[],w=0,svs=0,k=0,best=-1e9;cells[i].forEach((c,gi)=>{if(!c)return;t+=c.score;adj+=c.adj;svs+=c.sv;k+=c.kills;best=Math.max(best,c.score);const r=S.games[gi].res;if((r=='crew'&&!c.imp)||(r=='imp'&&c.imp))w++;if(c.adj)notes.push((c.adj>0?'+':'')+c.adj+(c.note?' '+c.note:''))});const ids=cells[i].filter(Boolean),res=ids.map((x,q)=>{if(!x.al)return x.who;for(let j=q-1;j>=0;j--)if(!ids[j].al)return ids[j].who;for(let j=q+1;j<ids.length;j++)if(!ids[j].al)return ids[j].who;return null}),runs=[];
+res.forEach(n=>{if(n==null)return;const l=runs[runs.length-1];if(l&&l.w.toLowerCase()==n.toLowerCase())l.n++;else runs.push({w:n,n:1})});
+const auto=runs.length>1?runs.map((r,q)=>q<runs.length-1?`${r.w} (${r.n})`:r.w).join(' / '):'';
+return{i,sl,cells:cells[i],raw:t,adj,total:t+adj,notes,w,svs,k,best,auto,label:(sl.manual||/\//.test(sl.name))?sl.name:(auto||sl.name)}})}
+
+return compute}
+let C={title:'Duos Tournament',num:'',date:'',tcolor:'',a:'lobby1',b:'lobby2',teams:{}},SA=null,SB=null;
+const roman=n=>{let r='';[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']].forEach(([v,l])=>{while(n>=v){r+=l;n-=v}});return r};
+const ttl=()=>(C.title||'')+(+C.num>0?' '+roman(+C.num)+' ('+(+C.num)+')':'');
+function loadSheet(v){if(!v||typeof v.cfg!=='string')return null;try{const S=JSON.parse(v.cfg);S.hosts=S.hosts||{};S.alias=S.alias||{};S.map=S.map||{};
+S.games=Array.from({length:7},(_,i)=>Object.assign({raw:'',res:'',rows:{}},typeof v['g'+i]==='string'?JSON.parse(v['g'+i]):{}));return S}catch(e){return null}}
+function combine(){const by={},add=(D,side)=>D.forEach(d=>{const t=by[d.sl.color]=by[d.sl.color]||{color:d.sl.color,a:[],b:[]};t[side].push(d)});
+if(SA)add(mkCalc(SA)(),'a');if(SB)add(mkCalc(SB)(),'b');
+return Object.values(by).map(t=>{const a=t.a[0],b=t.b[0],cf=C.teams[t.color]||{},g=Array.from({length:7},(_,i)=>{const x=a&&a.cells[i],y=b&&b.cells[i];return x||y?(x?x.score:0)+(y?y.score:0):null});
+return{color:t.color,a,b,ta:a?a.total:0,tb:b?b.total:0,total:(a?a.total:0)+(b?b.total:0),w:(a?a.w:0)+(b?b.w:0),svs:(a?a.svs:0)+(b?b.svs:0),k:(a?a.k:0)+(b?b.k:0),games:g,
+warn:t.a.length!=1||t.b.length!=1,name:cf.name||cn(t.color)+' team',m1:cf.m1||(a?a.label:'?'),m2:cf.m2||(b?b.label:'?'),notes:[...(a?a.notes:[]),...(b?b.notes:[])]}})}
+let prev={};
+function render(){const T=combine().sort((x,y)=>ci(x.color)-ci(y.color)),rk=[...T].sort((a,b)=>b.total-a.total||b.w-a.w||b.svs-a.svs||b.k-a.k||ci(a.color)-ci(b.color)),mx=Math.max(1,...T.map(t=>t.total)),has=T.some(t=>t.games.some(x=>x!=null));
+const tk=t=>[t.total,t.w,t.svs,t.k].join(),rn=rk.map((t,r)=>{let k=r;while(k>0&&tk(rk[k-1])==tk(t))k--;return k+1});
+const TBN=['wins','shadow votes','kills'],TBS=['wins','SV','kills'],tb=rk.map((t,r)=>{const n=rk[r-1]&&rk[r-1].total==t.total?rk[r-1]:rk[r+1]&&rk[r+1].total==t.total?rk[r+1]:null;if(!n)return'';const x=['w','svs','k'].findIndex(f=>t[f]!=n[f]);return x<0?'':`<small class="tb" title="Tie broken by combined ${TBN[x]}">TB·${TBS[x]}</small>`});
+const head=[1,2,3,4,5,6,7].map(i=>`<th class="gh">G${i}</th>`).join('');
+const rows=T.map(t=>`<tr><td class="nm" style="background:${t.color};color:${ink(t.color)}"><b>${esc(t.name)}</b><small>${esc(t.m1)} &amp; ${esc(t.m2)}${t.warn?' ⚠':''}</small></td>${t.games.map(g=>g==null?'<td class="c e">·</td>':`<td class="c">${g}</td>`).join('')}<td class="c sm">${t.ta}</td><td class="c sm">${t.tb}</td><td class="tot">${t.total}</td><td class="pn">${esc(t.notes.join(', '))}</td></tr>`).join('');
+const pod=has?`<div class="pod">${[1,0,2].filter(k=>rk[k]).map(k=>{const t=rk[k];return`<div class="p${k+1}"><div>${['🥇','🥈','🥉'][k]}</div><div class="n" style="color:${t.color}">${esc(t.name)}</div><div class="sm">${esc(t.m1)} &amp; ${esc(t.m2)}</div><div class="s">${t.total}</div></div>`}).join('')}</div>`:'';
+const lb=rk.map((t,r)=>`<div class="lb" data-i="${t.color}"><b>${rn[r]}</b><div class="nc"><span class="chip" style="background:${t.color};color:${ink(t.color)}" title="${esc(t.m1)} &amp; ${esc(t.m2)}">${esc(t.name)}</span>${tb[r]}</div><div class="bar"><u style="width:${Math.max(0,t.total)/mx*100}%;background:${t.color};color:${t.color}"></u></div><em>${t.total}</em></div>`).join('');
+$('#sheet').innerHTML=`<h1${C.tcolor?` class="solid" style="--tc:${C.tcolor}"`:''}>${esc(ttl())}</h1><div class="sub">${esc(C.date||'')}</div><div class="tw"><table><tr><th></th>${head}<th class="gh" title="${esc(C.a)}">LOBBY A</th><th class="gh" title="${esc(C.b)}">LOBBY B</th><th class="gh">TOTAL</th><th></th></tr>${rows}</table></div>
+<div class="key"><span>Each team = the two players sharing a color across both lobbies. G1-G7 are the two partners' scores added together.</span></div><div class="ft">Among Us Tournaments</div>${pod}<div class="lbw">${lb}</div>`;
+document.querySelectorAll('.lb').forEach(el=>{const t=el.offsetTop,p=prev[el.dataset.i];prev[el.dataset.i]=t;if(p!=null&&p!==t){el.style.transition='none';el.style.transform=`translateY(${p-t}px)`;requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.transition='transform .7s cubic-bezier(.2,.8,.2,1)';el.style.transform=''}))}});
+const w=[];if(CLOUD){if(!SA)w.push(`No data yet for sheet "${C.a}"`);if(!SB)w.push(`No data yet for sheet "${C.b}"`)}
+if(T.some(t=>t.warn)&&SA&&SB)w.push('⚠ A color is missing from one lobby or used twice, so some teams may be incomplete.');
+$('#note').textContent=w.join(' · ')}
+function renderPanel(){const T=combine().sort((x,y)=>ci(x.color)-ci(y.color)),f=(c,k,ph)=>`<input value="${esc((C.teams[c]||{})[k]||'')}" placeholder="${esc(ph)}" oninput="tm('${c}','${k}',this.value)">`;
+$('#meta').innerHTML=`<div class="grid3"><label>Series name<input value="${esc(C.title||'')}" oninput="C.title=this.value;save();render()"></label><label>Event #<input type="number" min="0" value="${esc(C.num||'')}" oninput="C.num=this.value;save();render()"></label><label>Date<input value="${esc(C.date||'')}" placeholder="9/27/2026" oninput="C.date=this.value;save();render()"></label><label>Title color<span style="display:flex;gap:6px"><input type="color" value="${C.tcolor||'#00b0f0'}" oninput="C.tcolor=this.value;save();render()" style="width:46px;padding:1px"><button onclick="C.tcolor='';save();renderPanel();render()">Default gradient</button></span></label><label>Lobby A sheet name<input value="${esc(C.a)}" onchange="setLobby('a',this.value)"></label><label>Lobby B sheet name<input value="${esc(C.b)}" onchange="setLobby('b',this.value)"></label></div>
+<h3>TEAMS (leave blank to use the defaults)</h3><div class="tw"><table class="rt"><tr><th>Color</th><th>Team name</th><th>Member 1 (lobby A)</th><th>Member 2 (lobby B)</th></tr>${T.map(t=>`<tr><td><span class="chip" style="background:${t.color};color:${ink(t.color)}">${cn(t.color)}</span></td><td>${f(t.color,'name',cn(t.color)+' team')}</td><td>${f(t.color,'m1',t.a?t.a.label:'')}</td><td>${f(t.color,'m2',t.b?t.b.label:'')}</td></tr>`).join('')||'<tr><td colspan="4" class="sm">Teams appear once both lobby sheets have data.</td></tr>'}</table></div>`}
+function tm(c,k,v){C.teams[c]=C.teams[c]||{};C.teams[c][k]=v;save();render()}
+function setLobby(k,v){C[k]=(v||'').replace(/[^\w-]/g,'').slice(0,40)||(k=='a'?'lobby1':'lobby2');save();watch();renderPanel();render()}
+const GST=['#19abff','#ff80e8','#1ec73a'];
+async function gimg(el){const cs=getComputedStyle(el),r=el.getBoundingClientRect(),K=2,pad=24,w=Math.ceil(r.width),h=Math.ceil(r.height);
+try{await document.fonts.load(`${cs.fontWeight} ${cs.fontSize} Orbitron`)}catch(e){}
+const c=document.createElement('canvas');c.width=(w+pad*2)*K;c.height=(h+pad*2)*K;const x=c.getContext('2d');x.scale(K,K);
+const fs=parseFloat(cs.fontSize),ls=parseFloat(cs.letterSpacing)||0,pl=parseFloat(cs.paddingLeft)||0,txt=el.textContent.toUpperCase();
+x.font=`${cs.fontWeight} ${fs}px ${cs.fontFamily}`;x.textBaseline='middle';
+const g=x.createLinearGradient(pad+pl,0,pad+w,0);(el.tagName=='H1'?GST.slice().reverse():GST).forEach((col,i)=>g.addColorStop(i/(GST.length-1),col));
+x.fillStyle=g;x.shadowColor='rgba(122,92,255,.55)';x.shadowBlur=14*K;
+let px=pad+pl;for(const ch of txt){x.fillText(ch,px,pad+h/2);px+=x.measureText(ch).width+ls}
+return{url:c.toDataURL('image/png'),w,h,pad}}
+async function exp(){if(!window.html2canvas){alert('Image export library did not load.');return}
+const sh=$('#sheet');let data=null;
+try{data=await Promise.all([...sh.querySelectorAll('h1:not(.solid),.ft')].map(gimg))}catch(e){data=null;sh.classList.add('exporting')}
+try{const c=await html2canvas(sh,{backgroundColor:'#07080f',scale:2,onclone:doc=>{if(!data)return;[...doc.querySelectorAll('#sheet h1:not(.solid),#sheet .ft')].forEach((el,i)=>{const d=data[i];if(!d)return;const im=doc.createElement('img');im.src=d.url;im.style.cssText=`display:block;max-width:none;width:${d.w+2*d.pad}px;height:${d.h+2*d.pad}px;margin:-${d.pad}px`;el.style.cssText+=';padding:0;background:none;color:transparent;filter:none;-webkit-background-clip:border-box;background-clip:border-box';el.textContent='';el.appendChild(im)})}});
+const a=document.createElement('a');a.download=(ttl()||'scores').replace(/\W+/g,'-')+'.png';a.href=c.toDataURL('image/png');a.click()}finally{sh.classList.remove('exporting')}}
+
+let canEdit=false,ready=false,tmr=null,last=null,DB=null,wa=null,wb=null,wra=null,wrb=null;
+const gen=()=>JSON.stringify({title:C.title,num:C.num,date:C.date,tcolor:C.tcolor,a:C.a,b:C.b,teams:C.teams});
+function save(){if(!canEdit||!ready)return;clearTimeout(tmr);tmr=setTimeout(()=>{const v=gen();if(v!==last){last=v;DB.ref(CFGPATH).set(v).catch(e=>msg('Save failed: '+e.message))}},350)}
+function msg(t){const m=$('#msg');if(m)m.textContent=t}
+function renderTop(){$('#topbar').innerHTML=`<span class="dot ${CLOUD?(canEdit?'ed':'vw'):''}"></span><span>${CLOUD?(canEdit?'Live · you can edit':'Live · view only'):'Not connected: paste your Firebase settings into this file'}</span><span class="sp"></span>${CLOUD?`<label>Duos page <input id="sid" value="${esc(DID)}" onkeydown="if(event.key=='Enter')openPage()"></label><button onclick="openPage()">Open</button>`:''}${CLOUD&&!canEdit?'<button class="ex" onclick="askCode()">Enter edit code</button>':''}<span id="msg"></span>`;document.body.classList.toggle('ro',CLOUD&&!canEdit)}
+function openPage(){const v=($('#sid').value||'').replace(/[^\w-]/g,'').slice(0,40)||'main';location.hash=v;location.reload()}
+function askCode(){const c=prompt('Enter the edit code');if(!c)return;const u=firebase.auth().currentUser;if(!u){alert('Still connecting. Try again in a moment.');return}
+DB.ref('editors/'+u.uid).set(c.trim()).then(()=>{canEdit=true;renderTop();renderPanel();save()}).catch(()=>alert('That code was not accepted.'))}
+function focused(sel){const a=document.activeElement,el=$(sel);return a&&el&&el.contains(a)&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)}
+function rerender(){render();if(!focused('#meta'))renderPanel()}
+function watch(){if(wa!==C.a){if(wra)wra.off();wa=C.a;wra=DB.ref('sheets/'+C.a);wra.on('value',x=>{SA=loadSheet(x.val());rerender()},e=>msg('Could not read '+C.a+': '+e.message))}
+if(wb!==C.b){if(wrb)wrb.off();wb=C.b;wrb=DB.ref('sheets/'+C.b);wrb.on('value',x=>{SB=loadSheet(x.val());rerender()},e=>msg('Could not read '+C.b+': '+e.message))}}
+function initCloud(){try{firebase.initializeApp(FB);DB=firebase.database()}catch(e){msg('Could not start Firebase: '+e.message);return}
+firebase.auth().signInAnonymously().then(c=>DB.ref('editors/'+c.user.uid).once('value')).then(x=>{canEdit=x.exists();renderTop();renderPanel()}).catch(e=>msg('Sign-in problem: '+e.message));
+DB.ref(CFGPATH).on('value',x=>{const v=x.val();if(typeof v==='string'&&v!==last&&!(ready&&canEdit&&gen()!==last)){try{const o=JSON.parse(v);Object.assign(C,o);C.teams=C.teams||{};last=gen()}catch(e){}}
+if(last===null)last=gen();ready=true;watch();rerender()},e=>msg('Could not read settings: '+e.message))}
+renderTop();render();renderPanel();
+if(CLOUD)initCloud();
+</script></body></html>
