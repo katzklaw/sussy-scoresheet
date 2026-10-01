@@ -86,7 +86,13 @@ const N=7,AU=[['Red','#b30a1f'],['Orange','#ef7d0e'],['Yellow','#f9f559'],['Lime
 PAL=['Tan','Red','Cyan','Gray','Orange','Black','Pink','Maroon','White','Rose'].map(n=>AUH[n]),KEY='sussy-sheet-v1';
 const fresh=()=>({title:'Sussy Saturday',date:'',slots:PAL.map((c,i)=>({name:'Player '+(i+1),color:c})),map:{},hosts:{},games:Array.from({length:N},()=>({raw:'',res:'',rows:{}}))});
 /* ===== FIREBASE SETTINGS: paste yours here (see SETUP.md). Leave as-is to run in local, unshared mode. ===== */
-const FB={apiKey:"PASTE",authDomain:"PASTE",databaseURL:"PASTE",projectId:"PASTE",appId:"PASTE"};
+const FB={  apiKey: "AIzaSyDGJ_6rk-hyxr3ErbjlAlr2qVDwA5AkhjY",
+  authDomain: "sussy-scoresheet.firebaseapp.com",
+  databaseURL: "https://sussy-scoresheet-default-rtdb.firebaseio.com",
+  projectId: "sussy-scoresheet",
+  storageBucket: "sussy-scoresheet.firebasestorage.app",
+  messagingSenderId: "152966582754",
+  appId: "1:152966582754:web:507f41158b35c3d447e9bb"};
 /* ======================================================================================================= */
 const CLOUD=String(FB.databaseURL).startsWith('https://')&&!!window.firebase;
 const SID=(location.hash.slice(1).replace(/[^\w-]/g,'')||'main').slice(0,40);
